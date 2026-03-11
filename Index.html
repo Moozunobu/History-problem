@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>歴史問題集 — 近代国家の歩みと国際社会</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --parchment: #f5f0e8;
+    --aged: #e8dfc8;
+    --gold: #c9a84c;
+    --gold-light: #e8cc7a;
+    --red: #8b2020;
+    --red-light: #c0392b;
+    --teal: #1a5f6e;
+    --teal-light: #2980a0;
+    --correct: #2d6a4f;
+    --correct-bg: #d8f3dc;
+    --wrong: #7b2d2d;
+    --wrong-bg: #fde8e8;
+    --neutral-bg: #eef5f7;
+    --shadow: rgba(26, 18, 8, 0.15);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--parchment);
+    color: var(--ink);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(201,168,76,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(26,95,110,0.08) 0%, transparent 50%);
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background: var(--ink);
+    color: var(--parchment);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(201,168,76,0.06) 60px,
+      rgba(201,168,76,0.06) 61px
+    );
+  }
+
+  .header-inner {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 36px 24px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .header-seal {
+    width: 64px;
+    height: 64px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 22px;
+    color: var(--gold);
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .header-seal::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 50%;
+  }
+
+  .header-text h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(18px, 3vw, 26px);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    line-height: 1.3;
+  }
+
+  .header-text p {
+    font-size: 12px;
+    color: rgba(245,240,232,0.6);
+    margin-top: 4px;
+    letter-spacing: 0.1em;
+  }
+
+  .gold-line {
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress-bar-wrap {
+    background: rgba(201,168,76,0.15);
+    height: 6px;
+  }
+
+  #progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+
+  /* ===== MAIN LAYOUT ===== */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 16px 64px;
+  }
+
+  /* ===== SECTION SELECTOR ===== */
+  #section-select {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .section-btn {
+    padding: 8px 16px;
+    border: 1.5px solid var(--gold);
+    background: transparent;
+    color: var(--ink);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+
+  .section-btn:hover, .section-btn.active {
+    background: var(--gold);
+    color: var(--ink);
+  }
+
+  /* ===== UNIT HEADER ===== */
+  .unit-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .unit-badge {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--parchment);
+    background: var(--teal);
+    padding: 4px 10px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .unit-title h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(16px, 2.5vw, 20px);
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* ===== QUESTION CARD ===== */
+  .question-card {
+    background: white;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px var(--shadow);
+    transition: box-shadow 0.2s;
+  }
+
+  .question-card.answered-correct {
+    border-color: var(--correct);
+  }
+
+  .question-card.answered-wrong {
+    border-color: var(--wrong);
+  }
+
+  .q-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 18px 14px;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    background: #fdfaf4;
+  }
+
+  .q-number {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 28px;
+    line-height: 1.4;
+    flex-shrink: 0;
+  }
+
+  .q-text {
+    font-size: 14px;
+    line-height: 1.8;
+    flex: 1;
+  }
+
+  .q-tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    white-space: nowrap;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .tag-fill { background: #dbeafe; color: #1e40af; }
+  .tag-choice { background: #fce7f3; color: #9d174d; }
+  .tag-text { background: #dcfce7; color: #15803d; }
+
+  /* ===== ANSWER AREA ===== */
+  .q-body {
+    padding: 14px 18px 16px;
+  }
+
+  /* Multiple choice */
+  .choices {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .choice-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1.5px solid #d1d5db;
+    background: white;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13.5px;
+    transition: all 0.18s;
+    color: var(--ink);
+  }
+
+  .choice-btn:hover:not(:disabled) {
+    border-color: var(--teal-light);
+    background: var(--neutral-bg);
+  }
+
+  .choice-btn .circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1.5px solid #9ca3af;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+    transition: all 0.18s;
+  }
+
+  .choice-btn.selected .circle {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: white;
+  }
+
+  .choice-btn.correct-ans {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+  }
+
+  .choice-btn.correct-ans .circle {
+    background: var(--correct);
+    border-color: var(--correct);
+    color: white;
+  }
+
+  .choice-btn.wrong-ans {
+    border-color: var(--wrong);
+    background: var(--wrong-bg);
+  }
+
+  .choice-btn.wrong-ans .circle {
+    background: var(--wrong);
+    border-color: var(--wrong);
+    color: white;
+  }
+
+  .choice-btn:disabled {
+    cursor: default;
+  }
+
+  /* Fill in the blank */
+  .fill-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .fill-input {
+    border: none;
+    border-bottom: 2px solid var(--teal);
+    padding: 4px 8px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    background: transparent;
+    color: var(--ink);
+    width: 120px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .fill-input:focus {
+    border-bottom-color: var(--gold);
+  }
+
+  .fill-input.correct-input {
+    border-bottom-color: var(--correct);
+    color: var(--correct);
+    font-weight: 700;
+  }
+
+  .fill-input.wrong-input {
+    border-bottom-color: var(--wrong);
+    color: var(--wrong);
+  }
+
+  /* Short answer */
+  .short-textarea {
+    width: 100%;
+    border: 1.5px solid #d1d5db;
+    border-radius: 3px;
+    padding: 10px 12px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13.5px;
+    color: var(--ink);
+    resize: vertical;
+    min-height: 72px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .short-textarea:focus {
+    border-color: var(--teal-light);
+  }
+
+  /* Answer reveal */
+  .answer-reveal {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 3px;
+    font-size: 13px;
+    display: none;
+    animation: slideIn 0.25s ease;
+  }
+
+  .answer-reveal.show { display: block; }
+
+  .answer-reveal.correct-reveal {
+    background: var(--correct-bg);
+    border-left: 3px solid var(--correct);
+    color: var(--correct);
+  }
+
+  .answer-reveal.wrong-reveal {
+    background: var(--wrong-bg);
+    border-left: 3px solid var(--wrong);
+  }
+
+  .answer-reveal strong {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Submit row */
+  .submit-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+  }
+
+  .submit-btn {
+    padding: 8px 20px;
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .submit-btn:hover:not(:disabled) {
+    background: var(--teal-light);
+  }
+
+  .submit-btn:disabled {
+    background: #9ca3af;
+    cursor: default;
+  }
+
+  /* Status icon */
+  .status-icon {
+    font-size: 20px;
+    display: none;
+  }
+
+  .status-icon.show { display: inline; }
+
+  /* ===== BOTTOM CONTROLS ===== */
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(201,168,76,0.3);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .counter-text {
+    font-size: 13px;
+    color: #6b7280;
+  }
+
+  .counter-text strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .finish-btn {
+    padding: 12px 32px;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: background 0.2s;
+  }
+
+  .finish-btn:hover {
+    background: var(--red-light);
+  }
+
+  /* ===== RESULTS SCREEN ===== */
+  #results {
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .results-hero {
+    text-align: center;
+    padding: 40px 20px 32px;
+    background: white;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 4px;
+    box-shadow: 0 4px 24px var(--shadow);
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .results-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--teal), var(--gold), var(--red));
+  }
+
+  .score-circle {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+    position: relative;
+  }
+
+  .score-circle svg {
+    transform: rotate(-90deg);
+  }
+
+  .score-circle .track {
+    fill: none;
+    stroke: #e5e7eb;
+    stroke-width: 8;
+  }
+
+  .score-circle .fill {
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 314;
+    stroke-dashoffset: 314;
+    transition: stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .score-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .score-pct {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .score-label {
+    font-size: 11px;
+    color: #6b7280;
+    margin-top: 2px;
+  }
+
+  .results-hero h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .results-stats {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 26px;
+    font-weight: 700;
+  }
+
+  .stat-num.correct-num { color: var(--correct); }
+  .stat-num.wrong-num { color: var(--wrong); }
+  .stat-num.skip-num { color: #9ca3af; }
+
+  .stat-lbl {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 2px;
+  }
+
+  /* Result sections */
+  .result-section {
+    margin-bottom: 24px;
+  }
+
+  .result-section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid currentColor;
+  }
+
+  .result-section-title.wrong-title { color: var(--wrong); }
+  .result-section-title.review-title { color: var(--teal); }
+
+  .result-section-title h3 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 17px;
+  }
+
+  .result-section-title .icon { font-size: 20px; }
+
+  /* Result item */
+  .result-item {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    border-left: 4px solid;
+  }
+
+  .result-item.wrong-item { border-left-color: var(--wrong); }
+  .result-item.review-item { border-left-color: var(--teal); }
+
+  .result-item-q {
+    font-size: 13.5px;
+    line-height: 1.7;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+
+  .result-answer-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 12.5px;
+  }
+
+  .your-ans {
+    color: var(--wrong);
+  }
+
+  .correct-ans-label {
+    color: var(--correct);
+    font-weight: 700;
+  }
+
+  .review-advice {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--teal);
+    background: var(--neutral-bg);
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* Retry button */
+  .retry-wrap {
+    text-align: center;
+    margin-top: 32px;
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .retry-btn {
+    padding: 12px 28px;
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .retry-btn:hover { background: var(--teal-light); }
+
+  .retry-wrong-btn {
+    padding: 12px 28px;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .retry-wrong-btn:hover { background: var(--red-light); }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    color: #9ca3af;
+    font-size: 14px;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .q-header { padding: 12px 14px 10px; }
+    .q-body { padding: 12px 14px 14px; }
+    .q-text { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-seal">史</div>
+    <div class="header-text">
+      <h1>歴史問題集<br><small style="font-size:0.6em;font-weight:400;letter-spacing:0.15em;">近代国家の歩みと国際社会</small></h1>
+      <p>２年３組 · もりもと のぶたか</p>
+    </div>
+  </div>
+  <div class="gold-line"></div>
+  <div class="progress-bar-wrap"><div id="progress-bar"></div></div>
+</header>
+
+<div class="container">
+
+  <!-- SECTION BUTTONS -->
+  <div id="section-select">
+    <button class="section-btn active" onclick="showSection('all')">すべて</button>
+    <button class="section-btn" onclick="showSection(0)">① 明治政府の近代化</button>
+    <button class="section-btn" onclick="showSection(1)">② 新たな外交・沖縄と北海道</button>
+    <button class="section-btn" onclick="showSection(2)">③ 自由民権運動・立憲政治</button>
+    <button class="section-btn" onclick="showSection(3)">④ 帝国主義・日清戦争</button>
+    <button class="section-btn" onclick="showSection(4)">⑤ 日露戦争・朝鮮と中国</button>
+    <button class="section-btn" onclick="showSection(5)">⑥ 産業革命・近代文化</button>
+    <button class="section-btn" onclick="showSection(6)">⑦ 第一次世界大戦・民族独立</button>
+    <button class="section-btn" onclick="showSection(7)">⑧ 大正デモクラシー</button>
+    <button class="section-btn" onclick="showSection(8)">⑨ 世界恐慌・軍部台頭</button>
+    <button class="section-btn" onclick="showSection(9)">⑩ 第二次世界大戦</button>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div id="quiz-screen">
+    <div id="questions-container"></div>
+
+    <div class="controls">
+      <div class="counter-text">
+        回答済み: <strong><span id="answered-count">0</span></strong> / <strong><span id="total-count">0</span></strong>問
+      </div>
+      <button class="finish-btn" onclick="showResults()">採点する ▶</button>
+    </div>
+  </div>
+
+  <!-- RESULTS SCREEN -->
+  <div id="results">
+    <div class="results-hero">
+      <div class="score-circle">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <circle class="track" cx="60" cy="60" r="50"/>
+          <circle class="fill" id="score-arc" cx="60" cy="60" r="50"/>
+        </svg>
+        <div class="score-center">
+          <div class="score-pct" id="score-pct">0%</div>
+          <div class="score-label">正答率</div>
+        </div>
+      </div>
+      <h2 id="result-message">結果</h2>
+      <div class="results-stats">
+        <div class="stat-item">
+          <div class="stat-num correct-num" id="stat-correct">0</div>
+          <div class="stat-lbl">正解</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num wrong-num" id="stat-wrong">0</div>
+          <div class="stat-lbl">不正解</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num skip-num" id="stat-skip">0</div>
+          <div class="stat-lbl">未回答</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wrong answers -->
+    <div class="result-section" id="wrong-section">
+      <div class="result-section-title wrong-title">
+        <span class="icon">✗</span>
+        <h3>間違えた問題</h3>
+      </div>
+      <div id="wrong-list"></div>
+    </div>
+
+    <!-- Review advice -->
+    <div class="result-section" id="review-section">
+      <div class="result-section-title review-title">
+        <span class="icon">📖</span>
+        <h3>もう一度復習しよう</h3>
+      </div>
+      <div id="review-list"></div>
+    </div>
+
+    <div class="retry-wrap">
+      <button class="retry-btn" onclick="retryAll()">もう一度すべて解く</button>
+      <button class="retry-wrong-btn" onclick="retryWrong()">間違えた問題だけ解く</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===========================
+// QUESTION DATA
+// ===========================
+const sections = [
+  {
+    title: "明治政府による「近代化」の始まり",
+    unit: "第4章 近代国家 ①",
+    questions: [
+      { id: 'q1_1', type: 'fill', text: '明治政府が1868年に出した、政治の方針を示す文書を何といいますか。', answer: '五箇条の御誓文', hint: '「五箇条の◯◯文」' },
+      { id: 'q1_2', type: 'choice', text: '1869年に東京に定めた新しい首都はどこですか。', choices: ['京都', '大阪', '東京', '横浜'], answer: '東京' },
+      { id: 'q1_3', type: 'fill', text: '明治政府が1871年に行った、藩を廃止して府・県を置く政策を何といいますか。', answer: '廃藩置県', hint: '廃藩◯◯' },
+      { id: 'q1_4', type: 'choice', text: '新政府の実権は、薩摩・長州・土佐・佐賀[肥前]の４藩の出身者が握った。このような政治を何といいますか。', choices: ['藩閥政治', '立憲政治', '民主政治', '幕藩政治'], answer: '藩閥政治' },
+      { id: 'q1_5', type: 'fill', text: '明治政府が国を豊かにして強い軍隊をもつ政策を何といいますか。', answer: '富国強兵', hint: '富国◯兵' },
+      { id: 'q1_6', type: 'choice', text: '1873年から始められた、地価の3%を現金で納めさせた税制改革を何といいますか。', choices: ['地租改正', '廃藩置県', '殖産興業', '文明開化'], answer: '地租改正' },
+      { id: 'q1_7', type: 'fill', text: '政府が地租改正を実施した際に土地の所有者に発行した証書を何といいますか。', answer: '地券', hint: '地◯' },
+      { id: 'q1_8', type: 'choice', text: '欧米の文化や生活様式が盛んに取り入れられた風潮を何といいますか。', choices: ['文明開化', '殖産興業', '富国強兵', '廃藩置県'], answer: '文明開化' },
+      { id: 'q1_9', type: 'fill', text: '「学問のす[す]め」を著すなど、欧米の思想を日本に紹介し多くの若者に影響を与えた人物は誰ですか。', answer: '福沢諭吉', hint: '◯◯◯◯' },
+      { id: 'q1_10', type: 'choice', text: '1872年に発布された、6歳以上の子どもに教育を受けさせる義務を定めた法律を何といいますか。', choices: ['学制', '教育勅語', '大日本帝国憲法', '民法'], answer: '学制' },
+    ]
+  },
+  {
+    title: "新たな外交と国境の画定 / 沖縄・北海道",
+    unit: "第4章 近代国家 ②",
+    questions: [
+      { id: 'q2_1', type: 'fill', text: '1871年に日本が清との間に結んだ条約を何といいますか。', answer: '日清修好条規', hint: '日清◯◯◯◯' },
+      { id: 'q2_2', type: 'choice', text: '1875年に日本がロシアとの間で結んだ、領土の境界を定めた条約を何といいますか。', choices: ['樺太・千島交換条約', '日清修好条規', '日朝修好条規', '下関条約'], answer: '樺太・千島交換条約' },
+      { id: 'q2_3', type: 'fill', text: '1875年に日本が朝鮮との間に結んだ、朝鮮にとって不平等な条約を何といいますか。', answer: '日朝修好条規', hint: '日朝◯◯◯◯' },
+      { id: 'q2_4', type: 'choice', text: '岩倉使節団の代表として欧米諸国に派遣された使節団を何といいますか。', choices: ['岩倉使節団', '遣唐使', '通信使', '朱印船'], answer: '岩倉使節団' },
+      { id: 'q2_5', type: 'fill', text: '1879年に新政府が琉球藩を廃止して置いた県を何といいますか。', answer: '沖縄県', hint: '◯◯県' },
+      { id: 'q2_6', type: 'choice', text: '北海道の開拓と防備にあたるために移住した兵士を何といいますか。', choices: ['屯田兵', '武士', '足軽', '旗本'], answer: '屯田兵' },
+    ]
+  },
+  {
+    title: "自由民権運動と立憲政治の確立",
+    unit: "第4章 近代国家 ③",
+    questions: [
+      { id: 'q3_1', type: 'fill', text: '自由民権運動の中心となり、国会開設を要求する意見書を政府に提出した人物は誰ですか。', answer: '板垣退助', hint: '◯◯◯助' },
+      { id: 'q3_2', type: 'choice', text: '1880年に大阪で結成された、国会開設を求める組織を何といいますか。', choices: ['国会期成同盟', '立憲政友会', '自由党', '帝国議会'], answer: '国会期成同盟' },
+      { id: 'q3_3', type: 'fill', text: '1882年に板垣退助が結成した、フランスの人権思想に基づく政党を何といいますか。', answer: '自由党', hint: '◯◯党' },
+      { id: 'q3_4', type: 'choice', text: '1889年に発布された日本初の近代憲法を何といいますか。', choices: ['大日本帝国憲法', '日本国憲法', '五箇条の御誓文', '教育勅語'], answer: '大日本帝国憲法' },
+      { id: 'q3_5', type: 'fill', text: '大日本帝国憲法の草案作成の中心となり、初代内閣総理大臣となった人物は誰ですか。', answer: '伊藤博文', hint: '◯◯博文' },
+      { id: 'q3_6', type: 'choice', text: '大日本帝国憲法において、主権はどこにあるとされていましたか。', choices: ['天皇', '国民', '議会', '内閣'], answer: '天皇' },
+      { id: 'q3_7', type: 'fill', text: '1890年に設置された、貴族院と衆議院の二院からなる議会を何といいますか。', answer: '帝国議会', hint: '◯◯議会' },
+    ]
+  },
+  {
+    title: "帝国主義と日本 ① — 列強の海外進出と条約改正・日清戦争",
+    unit: "第4章 近代国家 ④",
+    questions: [
+      { id: 'q4_1', type: 'fill', text: '19世紀後半以降、イギリス、フランス、ドイツ、ロシア、アメリカなどの欧米の国々は何とよばれましたか。', answer: '列強', hint: '列◯' },
+      { id: 'q4_2', type: 'choice', text: '1886年に起こった貨物船沈没事件を何といいますか。', choices: ['ノルマントン号事件', '生麦事件', '五・一五事件', '二・二六事件'], answer: 'ノルマントン号事件' },
+      { id: 'q4_3', type: 'fill', text: '1894年にイギリスとの間で領事裁判権の撤廃に成功した外務大臣は誰ですか。', answer: '陸奥宗光', hint: '◯◯宗光' },
+      { id: 'q4_4', type: 'choice', text: '1894年に朝鮮で起こった農民の反乱を何といいますか。', choices: ['甲午農民戦争', '壬午軍乱', '義和団事件', '三・一独立運動'], answer: '甲午農民戦争' },
+      { id: 'q4_5', type: 'fill', text: '日清戦争の講和条約（1895年）を何といいますか。', answer: '下関条約', hint: '◯◯条約' },
+      { id: 'q4_6', type: 'choice', text: '三国干渉で、日本が清への返還を要求された半島はどこですか。', choices: ['遼東半島', '朝鮮半島', '山東半島', 'カムチャツカ半島'], answer: '遼東半島' },
+      { id: 'q4_7', type: 'fill', text: '欧米列強が軍事力を背景に植民地支配を広げていった動きや考え方を何といいますか。', answer: '帝国主義', hint: '◯国主義' },
+    ]
+  },
+  {
+    title: "帝国主義と日本 ② — 日露戦争・朝鮮と中国",
+    unit: "第4章 近代国家 ⑤",
+    questions: [
+      { id: 'q5_1', type: 'choice', text: '1902年にロシアに対抗するため日本とイギリスが結んだ同盟を何といいますか。', choices: ['日英同盟', '日仏同盟', '三国同盟', '三国協商'], answer: '日英同盟' },
+      { id: 'q5_2', type: 'fill', text: '日露戦争（1904年）の講和条約（1905年）を何といいますか。', answer: 'ポーツマス条約', hint: '◯◯◯◯条約' },
+      { id: 'q5_3', type: 'choice', text: 'ポーツマス条約の交渉に成功した外相は誰ですか。', choices: ['小村寿太郎', '陸奥宗光', '伊藤博文', '大久保利通'], answer: '小村寿太郎' },
+      { id: 'q5_4', type: 'fill', text: '日露戦争後に東京で起こった暴動事件を何といいますか。', answer: '日比谷焼き打ち事件', hint: '◯◯谷焼き打ち事件' },
+      { id: 'q5_5', type: 'choice', text: '1910年に日本が行ったことを何といいますか。', choices: ['韓国併合', '台湾占領', '満洲事変', '日清戦争'], answer: '韓国併合' },
+      { id: 'q5_6', type: 'fill', text: '1911年に中国で起こり、清朝を倒した革命を何といいますか。', answer: '辛亥革命', hint: '◯◯革命' },
+      { id: 'q5_7', type: 'choice', text: '中華民国の臨時大総統に就任した人物は誰ですか。', choices: ['孫文', '袁世凱', '毛沢東', '蒋介石'], answer: '孫文' },
+    ]
+  },
+  {
+    title: "アジアの強国の光と影 — 産業革命・近代文化",
+    unit: "第4章 近代国家 ⑥",
+    questions: [
+      { id: 'q6_1', type: 'fill', text: '1901年から銑鉄の生産を開始した官営の製鉄所を何といいますか。', answer: '八幡製鉄所', hint: '◯幡製鉄所' },
+      { id: 'q6_2', type: 'choice', text: '多くの企業を経営した、三井・三菱・住友・安田などの実業家を何といいますか。', choices: ['財閥', '地主', '豪商', '武士'], answer: '財閥' },
+      { id: 'q6_3', type: 'fill', text: '「吾輩は猫である」などの小説を書いた人物は誰ですか。', answer: '夏目漱石', hint: '◯目漱石' },
+      { id: 'q6_4', type: 'choice', text: 'ペスト菌を発見した医学者は誰ですか。', choices: ['北里柴三郎', '野口英世', '志賀潔', '長岡半太郎'], answer: '北里柴三郎' },
+      { id: 'q6_5', type: 'fill', text: '農村では、土地を手放し地主の下で働く農民を何といいますか。', answer: '小作人', hint: '◯作人' },
+    ]
+  },
+  {
+    title: "第一次世界大戦と民族独立の動き",
+    unit: "第5章 世界大戦 ①",
+    questions: [
+      { id: 'q7_1', type: 'fill', text: '1882年にドイツがオーストリア・イタリアと結んだ同盟を何といいますか。', answer: '三国同盟', hint: '三国◯◯' },
+      { id: 'q7_2', type: 'choice', text: '1914年に起こった、オーストリアの皇太子夫妻暗殺事件を何といいますか。', choices: ['サラエボ事件', 'ノルマントン号事件', '五・一五事件', '二・二六事件'], answer: 'サラエボ事件' },
+      { id: 'q7_3', type: 'fill', text: '1917年にロシアで起こり、世界初の社会主義国家を誕生させた革命を何といいますか。', answer: 'ロシア革命', hint: '◯◯◯革命' },
+      { id: 'q7_4', type: 'choice', text: '1919年にパリ講和会議でドイツとの間に結ばれた条約を何といいますか。', choices: ['ベルサイユ条約', 'ポーツマス条約', '下関条約', '日英同盟'], answer: 'ベルサイユ条約' },
+      { id: 'q7_5', type: 'fill', text: '1920年にウィルソン大統領の提案で設立された国際機関を何といいますか。', answer: '国際連盟', hint: '国際◯◯' },
+      { id: 'q7_6', type: 'choice', text: '1919年に朝鮮で起こった、日本からの独立を目指す民族運動を何といいますか。', choices: ['三・一独立運動', '五・四運動', '義和団事件', '辛亥革命'], answer: '三・一独立運動' },
+      { id: 'q7_7', type: 'fill', text: 'インドで非暴力・不服従の抵抗運動を指導した人物は誰ですか。', answer: 'ガンディー', hint: 'ガ◯◯◯' },
+    ]
+  },
+  {
+    title: "高まるデモクラシーの意識 — 大正デモクラシー",
+    unit: "第5章 世界大戦 ②",
+    questions: [
+      { id: 'q8_1', type: 'fill', text: '天皇主権の下、民衆の意思に基づき政党や議会を中心とする政治を行うとする考え方を何といいますか。', answer: '民本主義', hint: '民本◯◯' },
+      { id: 'q8_2', type: 'choice', text: '民本主義を主張した政治学者は誰ですか。', choices: ['吉野作造', '板垣退助', '原敬', '加藤高明'], answer: '吉野作造' },
+      { id: 'q8_3', type: 'fill', text: '1918年に米の買い占めに反対して起こった暴動を何といいますか。', answer: '米騒動', hint: '米◯◯' },
+      { id: 'q8_4', type: 'choice', text: '1925年に実現した、25歳以上のすべての男性に選挙権を与える制度を何といいますか。', choices: ['男子普通選挙', '女子普通選挙', '制限選挙', '比例代表選挙'], answer: '男子普通選挙' },
+      { id: 'q8_5', type: 'fill', text: '1922年に差別撤廃を目指して結成された団体を何といいますか。', answer: '全国水平社', hint: '全国水◯社' },
+      { id: 'q8_6', type: 'choice', text: '1923年に東京・横浜を中心に起こった大地震による災害を何といいますか。', choices: ['関東大震災', '阪神・淡路大震災', '東日本大震災', '濃尾地震'], answer: '関東大震災' },
+    ]
+  },
+  {
+    title: "戦争に向かう世論 — 世界恐慌・軍部の台頭・日中戦争",
+    unit: "第5章 世界大戦 ③",
+    questions: [
+      { id: 'q9_1', type: 'fill', text: '1929年にニューヨークの株式取引所で株価が大暴落したことをきっかけにアメリカが不景気になり、世界中に広がった出来事を何といいますか。', answer: '世界恐慌', hint: '世界◯◯' },
+      { id: 'q9_2', type: 'choice', text: 'アメリカのルーズベルト大統領が始めた、政府が経済を調整する政策を何といいますか。', choices: ['ニューディール政策', 'ブロック経済', '五か年計画', '徴兵令'], answer: 'ニューディール政策' },
+      { id: 'q9_3', type: 'fill', text: '1931年に日本陸軍[関東軍]が軍事行動を開始し、満州全体を占領した出来事を何といいますか。', answer: '満洲事変', hint: '満洲◯◯' },
+      { id: 'q9_4', type: 'choice', text: '1932年に海軍の青年将校らが首相官邸を襲撃した事件を何といいますか。', choices: ['五・一五事件', '二・二六事件', 'サラエボ事件', '柳条湖事件'], answer: '五・一五事件' },
+      { id: 'q9_5', type: 'fill', text: '1937年に日中両軍が武力衝突したことをきっかけに始まった戦争を何といいますか。', answer: '日中戦争', hint: '日◯戦争' },
+      { id: 'q9_6', type: 'choice', text: '1938年に定められた、国民や物資を優先的に戦争に回すための法律を何といいますか。', choices: ['国家総動員法', '大政翼賛会', '治安維持法', '軍部大臣現役武官制'], answer: '国家総動員法' },
+      { id: 'q9_7', type: 'fill', text: 'ドイツでナチ党を率いて1933年に政権を握った人物は誰ですか。', answer: 'ヒトラー', hint: 'ヒ◯◯◯' },
+    ]
+  },
+  {
+    title: "第二次世界大戦の惨禍",
+    unit: "第5章 世界大戦 ④",
+    questions: [
+      { id: 'q10_1', type: 'fill', text: '1939年にドイツがポーランドに侵攻し始まった戦争を何といいますか。', answer: '第二次世界大戦', hint: '第◯次世界大戦' },
+      { id: 'q10_2', type: 'choice', text: '1940年に日本・ドイツ・イタリアが結んだ同盟を何といいますか。', choices: ['日独伊三国同盟', '三国同盟', '日英同盟', '国際連盟'], answer: '日独伊三国同盟' },
+      { id: 'q10_3', type: 'fill', text: '1941年に日本軍がイギリス領のマレー半島に上陸するとともに行ったことで太平洋戦争が始まった攻撃を何といいますか。', answer: '真珠湾攻撃', hint: '◯◯◯攻撃' },
+      { id: 'q10_4', type: 'choice', text: 'アメリカ軍が1945年8月6日に広島に投下した大量破壊兵器を何といいますか。', choices: ['原子爆弾', '機雷', '魚雷', '焼夷弾'], answer: '原子爆弾' },
+      { id: 'q10_5', type: 'fill', text: '連合国が1945年7月に発表した、日本の無条件降伏を求める宣言を何といいますか。', answer: 'ポツダム宣言', hint: '◯◯◯◯宣言' },
+      { id: 'q10_6', type: 'choice', text: '第二次世界大戦後に連合国が設立した、世界の平和を目指す国際機関を何といいますか。', choices: ['国際連合', '国際連盟', '国際通貨基金', 'NATO'], answer: '国際連合' },
+    ]
+  }
+];
+
+// ===========================
+// STATE
+// ===========================
+let currentFilter = 'all';
+let displayedQuestions = []; // [{sectionIdx, q}]
+let userAnswers = {}; // id -> {value, correct}
+let wrongIds = new Set();
+let retryMode = false;
+let retryIds = [];
+
+// ===========================
+// RENDER
+// ===========================
+function getDisplayedQuestions() {
+  let result = [];
+  if (retryMode) {
+    for (const s of sections) {
+      for (const q of s.questions) {
+        if (retryIds.includes(q.id)) result.push(q);
+      }
+    }
+  } else if (currentFilter === 'all') {
+    for (const s of sections) {
+      for (const q of s.questions) result.push(q);
+    }
+  } else {
+    const s = sections[currentFilter];
+    if (s) for (const q of s.questions) result.push(q);
+  }
+  return result;
+}
+
+function renderQuestions() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  userAnswers = {};
+  wrongIds = new Set();
+
+  const toShow = getDisplayedQuestions();
+  displayedQuestions = toShow;
+
+  // Group by section
+  const groups = {};
+  for (const q of toShow) {
+    const sIdx = sections.findIndex(s => s.questions.some(sq => sq.id === q.id));
+    if (!groups[sIdx]) groups[sIdx] = { section: sections[sIdx], qs: [] };
+    groups[sIdx].qs.push(q);
+  }
+
+  let qNum = 0;
+
+  for (const sIdx of Object.keys(groups)) {
+    const { section, qs } = groups[sIdx];
+
+    const unitDiv = document.createElement('div');
+    unitDiv.style.marginBottom = '32px';
+
+    const unitTitle = document.createElement('div');
+    unitTitle.className = 'unit-title';
+    unitTitle.innerHTML = `<span class="unit-badge">${section.unit}</span><h2>${section.title}</h2>`;
+    unitDiv.appendChild(unitTitle);
+
+    for (const q of qs) {
+      qNum++;
+      unitDiv.appendChild(buildCard(q, qNum));
+    }
+    container.appendChild(unitDiv);
+  }
+
+  updateCounter();
+}
+
+function buildCard(q, num) {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = 'card-' + q.id;
+
+  // Tag
+  const tagMap = { fill: ['語句記入', 'tag-fill'], choice: ['選択問題', 'tag-choice'], short: ['記述問題', 'tag-text'] };
+  const [tagTxt, tagCls] = tagMap[q.type] || ['問題', 'tag-fill'];
+
+  card.innerHTML = `
+    <div class="q-header">
+      <div class="q-number">${num}</div>
+      <div class="q-text">${q.text}</div>
+      <span class="q-tag ${tagCls}">${tagTxt}</span>
+    </div>
+    <div class="q-body" id="body-${q.id}"></div>
+  `;
+
+  const body = card.querySelector('#body-' + q.id);
+
+  if (q.type === 'choice') {
+    const wrap = document.createElement('div');
+    wrap.className = 'choices';
+    const letters = ['ア', 'イ', 'ウ', 'エ', 'オ'];
+    q.choices.forEach((c, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'choice-btn';
+      btn.innerHTML = `<span class="circle">${letters[i]}</span><span>${c}</span>`;
+      btn.onclick = () => selectChoice(q, c, btn, wrap, card);
+      wrap.appendChild(btn);
+    });
+    body.appendChild(wrap);
+
+  } else if (q.type === 'fill') {
+    const wrap = document.createElement('div');
+    wrap.className = 'fill-wrap';
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'fill-input';
+    input.placeholder = q.hint || '答えを入力';
+    input.id = 'input-' + q.id;
+    input.onkeydown = (e) => { if (e.key === 'Enter') checkFill(q, input, card); };
+    input.oninput = updateCounter;
+    wrap.appendChild(input);
+
+    const btn = document.createElement('button');
+    btn.className = 'submit-btn';
+    btn.textContent = '確認';
+    btn.id = 'fillbtn-' + q.id;
+    btn.onclick = () => checkFill(q, input, card);
+    wrap.appendChild(btn);
+
+    const reveal = document.createElement('div');
+    reveal.className = 'answer-reveal';
+    reveal.id = 'reveal-' + q.id;
+
+    body.appendChild(wrap);
+    body.appendChild(reveal);
+
+  } else if (q.type === 'short') {
+    const ta = document.createElement('textarea');
+    ta.className = 'short-textarea';
+    ta.placeholder = '答えを入力してください';
+    ta.id = 'input-' + q.id;
+    ta.oninput = updateCounter;
+    body.appendChild(ta);
+
+    const row = document.createElement('div');
+    row.className = 'submit-row';
+    const btn = document.createElement('button');
+    btn.className = 'submit-btn';
+    btn.textContent = '答え合わせ';
+    btn.onclick = () => checkShort(q, ta, card);
+    row.appendChild(btn);
+    body.appendChild(row);
+
+    const reveal = document.createElement('div');
+    reveal.className = 'answer-reveal';
+    reveal.id = 'reveal-' + q.id;
+    body.appendChild(reveal);
+  }
+
+  return card;
+}
+
+function selectChoice(q, chosen, btn, wrap, card) {
+  if (userAnswers[q.id]) return; // already answered
+  const correct = chosen === q.answer;
+  userAnswers[q.id] = { value: chosen, correct };
+
+  const letters = ['ア', 'イ', 'ウ', 'エ', 'オ'];
+  wrap.querySelectorAll('.choice-btn').forEach((b, i) => {
+    b.disabled = true;
+    const txt = q.choices[i];
+    if (txt === q.answer) {
+      b.classList.add('correct-ans');
+    }
+    if (b === btn && !correct) {
+      b.classList.add('wrong-ans');
+    }
+  });
+
+  card.classList.add(correct ? 'answered-correct' : 'answered-wrong');
+  if (!correct) wrongIds.add(q.id);
+
+  updateCounter();
+  updateProgress();
+}
+
+function checkFill(q, input, card) {
+  const val = input.value.trim();
+  if (!val) return;
+  if (userAnswers[q.id]) return;
+
+  const correct = val === q.answer || isAcceptable(q, val);
+  userAnswers[q.id] = { value: val, correct };
+
+  input.disabled = true;
+  input.classList.add(correct ? 'correct-input' : 'wrong-input');
+
+  const reveal = document.getElementById('reveal-' + q.id);
+  const btn = document.getElementById('fillbtn-' + q.id);
+  if (btn) btn.disabled = true;
+
+  reveal.className = 'answer-reveal show ' + (correct ? 'correct-reveal' : 'wrong-reveal');
+  if (correct) {
+    reveal.innerHTML = '<strong>✓ 正解！</strong>' + q.answer;
+  } else {
+    reveal.innerHTML = `<strong>✗ 不正解</strong>正しい答え：<b>${q.answer}</b>`;
+    wrongIds.add(q.id);
+  }
+
+  card.classList.add(correct ? 'answered-correct' : 'answered-wrong');
+  updateCounter();
+  updateProgress();
+}
+
+function checkShort(q, ta, card) {
+  const val = ta.value.trim();
+  if (!val) return;
+  if (userAnswers[q.id]) return;
+
+  userAnswers[q.id] = { value: val, correct: null }; // manual check
+
+  ta.disabled = true;
+  const reveal = document.getElementById('reveal-' + q.id);
+  reveal.className = 'answer-reveal show';
+  reveal.style.background = '#f0f4f8';
+  reveal.style.borderLeft = '3px solid #6b7280';
+  reveal.innerHTML = `<strong>模範解答</strong>${q.answer}`;
+
+  updateCounter();
+  updateProgress();
+}
+
+function isAcceptable(q, val) {
+  // Accept partial matches for some fill-in answers
+  if (!q.acceptAlt) return false;
+  return q.acceptAlt.includes(val);
+}
+
+// ===========================
+// COUNTER & PROGRESS
+// ===========================
+function updateCounter() {
+  const total = displayedQuestions.length;
+  const answered = Object.keys(userAnswers).length;
+  document.getElementById('answered-count').textContent = answered;
+  document.getElementById('total-count').textContent = total;
+}
+
+function updateProgress() {
+  const total = displayedQuestions.length;
+  const answered = Object.keys(userAnswers).length;
+  const pct = total ? (answered / total) * 100 : 0;
+  document.getElementById('progress-bar').style.width = pct + '%';
+}
+
+// ===========================
+// SECTION FILTER
+// ===========================
+function showSection(idx) {
+  currentFilter = idx;
+  retryMode = false;
+  document.querySelectorAll('.section-btn').forEach((b, i) => {
+    if (idx === 'all') b.classList.toggle('active', i === 0);
+    else b.classList.toggle('active', b.textContent.startsWith('①②③④⑤⑥⑦⑧⑨⑩'[idx] || '') || (i === idx + 1));
+  });
+  // Simpler: just mark by index
+  document.querySelectorAll('.section-btn').forEach((b, i) => {
+    if (idx === 'all') b.classList.toggle('active', i === 0);
+    else b.classList.toggle('active', i === idx + 1);
+  });
+  document.getElementById('quiz-screen').style.display = 'block';
+  document.getElementById('results').style.display = 'none';
+  renderQuestions();
+}
+
+// ===========================
+// RESULTS
+// ===========================
+function showResults() {
+  // Force unanswered fills to be counted
+  const total = displayedQuestions.length;
+  let correct = 0, wrong = 0, skip = 0;
+
+  for (const q of displayedQuestions) {
+    const ans = userAnswers[q.id];
+    if (!ans) { skip++; wrongIds.add(q.id); }
+    else if (ans.correct === true) correct++;
+    else if (ans.correct === false) wrong++;
+    else skip++; // short answer
+  }
+
+  const pct = total ? Math.round((correct / total) * 100) : 0;
+
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('results').style.display = 'block';
+
+  // Animate score circle
+  const arc = document.getElementById('score-arc');
+  const circumference = 314;
+  setTimeout(() => {
+    arc.style.strokeDashoffset = circumference - (pct / 100) * circumference;
+    if (pct >= 80) arc.style.stroke = '#2d6a4f';
+    else if (pct >= 60) arc.style.stroke = '#c9a84c';
+    else arc.style.stroke = '#8b2020';
+  }, 100);
+
+  document.getElementById('score-pct').textContent = pct + '%';
+  document.getElementById('stat-correct').textContent = correct;
+  document.getElementById('stat-wrong').textContent = wrong + skip;
+  document.getElementById('stat-skip').textContent = skip;
+
+  let msg = '';
+  if (pct === 100) msg = '完璧です！全問正解！🎉';
+  else if (pct >= 80) msg = 'とても良くできました！';
+  else if (pct >= 60) msg = '合格ライン！もう少し頑張りましょう。';
+  else msg = 'もっと復習が必要です。頑張って！';
+  document.getElementById('result-message').textContent = msg;
+
+  // Wrong list
+  const wrongList = document.getElementById('wrong-list');
+  wrongList.innerHTML = '';
+  const wrongSection = document.getElementById('wrong-section');
+
+  if (wrongIds.size === 0) {
+    wrongSection.style.display = 'none';
+  } else {
+    wrongSection.style.display = 'block';
+    wrongIds.forEach(id => {
+      const q = findQuestion(id);
+      if (!q) return;
+      const ans = userAnswers[id];
+      const item = document.createElement('div');
+      item.className = 'result-item wrong-item';
+      const yourAns = ans ? ans.value : '（未回答）';
+      item.innerHTML = `
+        <div class="result-item-q">❌ ${q.text}</div>
+        <div class="result-answer-row">
+          <span class="your-ans">あなたの答え: ${yourAns}</span>
+          <span class="correct-ans-label">正解: ${q.answer}</span>
+        </div>
+      `;
+      wrongList.appendChild(item);
+    });
+  }
+
+  // Review advice
+  const reviewList = document.getElementById('review-list');
+  reviewList.innerHTML = '';
+
+  const reviewMap = {
+    'q1_': { text: '明治政府の改革（富国強兵・文明開化）', page: 'p.170〜175' },
+    'q2_': { text: '新たな外交と国境の画定（沖縄・北海道）', page: 'p.178〜181' },
+    'q3_': { text: '自由民権運動と帝国憲法', page: 'p.184〜187' },
+    'q4_': { text: '帝国主義・列強の海外進出と条約改正・日清戦争', page: 'p.190〜193' },
+    'q5_': { text: '日露戦争・朝鮮と中国', page: 'p.194〜197' },
+    'q6_': { text: '産業革命の進展と社会問題・近代文化', page: 'p.198〜207' },
+    'q7_': { text: '第一次世界大戦と民族独立の動き', page: 'p.210〜217' },
+    'q8_': { text: '大正デモクラシーと普通選挙', page: 'p.220〜227' },
+    'q9_': { text: '世界恐慌・軍部の台頭・日中戦争', page: 'p.232〜239' },
+    'q10_': { text: '第二次世界大戦と太平洋戦争', page: 'p.244〜253' },
+  };
+
+  const needsReview = new Set();
+  wrongIds.forEach(id => {
+    for (const prefix of Object.keys(reviewMap)) {
+      if (id.startsWith(prefix)) needsReview.add(prefix);
+    }
+  });
+
+  if (needsReview.size === 0) {
+    reviewList.innerHTML = '<p style="color:#2d6a4f;font-size:14px;">✨ 特に復習が必要な単元はありません！</p>';
+  } else {
+    needsReview.forEach(prefix => {
+      const info = reviewMap[prefix];
+      const item = document.createElement('div');
+      item.className = 'result-item review-item';
+      item.innerHTML = `
+        <div class="result-item-q">📚 <strong>${info.text}</strong></div>
+        <span class="review-advice">教科書 ${info.page} を見直してみましょう</span>
+      `;
+      reviewList.appendChild(item);
+    });
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function findQuestion(id) {
+  for (const s of sections) {
+    const q = s.questions.find(q => q.id === id);
+    if (q) return q;
+  }
+  return null;
+}
+
+// ===========================
+// RETRY
+// ===========================
+function retryAll() {
+  retryMode = false;
+  document.getElementById('quiz-screen').style.display = 'block';
+  document.getElementById('results').style.display = 'none';
+  wrongIds = new Set();
+  renderQuestions();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function retryWrong() {
+  if (wrongIds.size === 0) { alert('間違えた問題がありません！'); return; }
+  retryMode = true;
+  retryIds = [...wrongIds];
+  wrongIds = new Set();
+  document.getElementById('quiz-screen').style.display = 'block';
+  document.getElementById('results').style.display = 'none';
+  renderQuestions();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===========================
+// INIT
+// ===========================
+renderQuestions();
+</script>
+</body>
+</html>
